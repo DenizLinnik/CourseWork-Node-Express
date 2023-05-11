@@ -10,7 +10,7 @@ const User = DataBase.define("user", {
 
 const Basket = DataBase.define("basket", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-});
+  });
 
 const Poster = DataBase.define("poster", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -29,8 +29,27 @@ const Ticket = DataBase.define("ticket", {
   quantity: { type: DataTypes.INTEGER }
 });
 
+const MovieTheaters = DataBase.define("movietheaters", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING },
+  address: { type: DataTypes.STRING },
+});
+
+const Sessions = DataBase.define("sessions", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  dataSession: { type: DataTypes.STRING },
+});
+
+User.hasOne(Basket);
+Basket.belongsTo(User);
+
 Poster.hasMany(Ticket);
 Ticket.belongsTo(Poster);
 
+MovieTheaters.hasMany(Sessions);
+Sessions.belongsTo(MovieTheaters);
 
-export { User, Basket, Poster, Ticket };
+Poster.hasMany(Sessions);
+Sessions.belongsTo(Poster);
+
+export { User, Basket, Poster, Ticket, MovieTheaters, Sessions };
